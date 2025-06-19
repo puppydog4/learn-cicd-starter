@@ -19,7 +19,6 @@ jobs:
           go-version: "1.23.0"
       - name: Install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
-
       - name: Run Go Style Check
         run: test -z $(go fmt ./...) && go fmt ./...
       - name: Run Staticcheck
@@ -36,6 +35,10 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: "1.23.0"
+      - name: install Gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
 
       - name: Run Go Tests
         run: go test -cover -v ./...
+      - name: Run Gosec
+        run: gosec ./...
